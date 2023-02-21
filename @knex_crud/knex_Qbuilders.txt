@@ -1,0 +1,218 @@
+INSERT INTO public.games(
+	id, nome, preco)
+	VALUES (1,'jogo1',30.23);
+*****************************************
+Inicio do projeto
+-----------------------------------------
+baixar e instalar o NODE.JS
+-----------------------------------------
+verificando instação
+-----------------------------------------
+node --version
+npm  --version
+*****************************************
+mkdir knex_crud
+cd knex_crud
+-----------------------------------------
+npm init
+-----------------------------------------
+npm install node -g  (-g se quizer global)
+-----------------------------------------
+-----------------------------------------
+npm install knex --save
+-----------------------------------------
+npm install mysql2 --save    (mysql)
+-----------------------------------------
+npm install pg  --save       (Postgres)
+-----------------------------------------
+VS CODE abre a pasta o projeto knex_crud
+*****************************************
+criar arquivo --- database.JS
+-----------------------------------------
+criar tabela estudio
+-------------------------------------
+id      int unsigned auto-incremento
+nome    varchar(50)
+game_id int unsigned
+-------------------------------------
+criar tabela games 
+-------------------------------------
+id      int unsigned auto-incremento
+nome    varchar(50)
+preco   decimal(12,2)
+-------------------------------------
+const knex = require('knex')({
+    client: 'mysql2',
+    connection: {
+      host : '127.0.0.1',
+      port : 3306,
+      user : 'root',
+      password : '?????',
+      database : 'knexdb'
+    }
+  });
+  module.exports = knex;
+-----------------------------------------
+criar arquivo --- index.JS
+-----------------------------------------
+-----------------------------------------
+var database = require("./database");
+/* Rotina de insert into table
+var dados = [
+{
+    nome: "call of duty",
+    preco: 90.07
+},
+{
+    nome: "GTA",
+    preco: 80
+},
+{
+    nome: "Wow",
+    preco: 170
+}
+
+]
+
+database.insert(dados).into("games").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+});
+*/
+/* Rotina de consulta query
+database.select().table("games").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+});
+
+database.select(['id','nome']).table("games").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+});
+*/
+/* Rotina usando whereRaw e função raw()
+database.select(["id","preco"]).whereRaw("preco > 80.00")
+                               .table("games").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+});
+
+database.raw("describe games").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+});
+
+database.where({id: 3}).delete().table("games").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+});
+
+database.where({id: 5}).update({preco: 355.00}).table("games").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+});
+
+//Rotina de consulta query
+database.select().table("games").orderBy("preco","asc").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+});
+database.select().table("games").orderBy("preco","desc").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+});
+
+database.insert({
+    nome: "Blizzard",
+    game_id: 5
+}).table("estudio").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+});
+
+database.insert({
+    nome: "outroestudio",
+    game_id: 5
+}).table("estudio").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+});
+*/
+
+database.insert({
+    nome: "outroestudio",
+    game_id: 5
+}).table("estudio").then(data => {
+    console.log(data);
+}).catch(err => {
+    console.log(err);
+});
+****************************************************************************
+****************************************************************************
+PS K:\@knex_post> node index.js
+[ { id: 7, preco: '39.19' }, { id: 8, preco: '49.19' } ]
+[
+  { id: 5, nome: 'call of tiger', preco: '19.19' },
+  { id: 6, nome: 'call of fox', preco: '29.19' },
+  { id: 7, nome: 'call of lion', preco: '39.19' },
+  { id: 8, nome: 'call of snake', preco: '49.19' }
+]
+[
+  { id: 8, nome: 'call of snake', preco: '49.19' },
+  { id: 7, nome: 'call of lion', preco: '39.19' },
+  { id: 6, nome: 'call of fox', preco: '29.19' },
+  { id: 5, nome: 'call of tiger', preco: '19.19' }
+]
+*******************************************************************************
+*******************************************************************************
+var database = require("./database");
+
+var dados = [
+    { 
+        id: 5,
+        nome: "call of tiger",
+        preco: 19.19
+    },
+    { 
+        id: 6,
+        nome: "call of fox",
+        preco: 29.19
+    },
+    { 
+        id: 7,
+        nome: "call of lion",
+        preco: 39.19
+    },
+    { 
+        id: 8,
+        nome: "call of snake",
+        preco: 49.19
+    }
+    ]
+
+   async function ins_dados() {
+
+        try {
+            await database.transaction(async trans =>{
+                await database.insert(dados).table("games");
+            });
+        }catch(err){
+            console.log(err);
+        } 
+
+        }
+
+        ins_dados();
+*************************************************************************************
+*************************************************************************************

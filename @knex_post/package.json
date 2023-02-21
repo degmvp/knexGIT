@@ -1,0 +1,16 @@
+{
+  "name": "knexpost",
+  "version": "1.0.0",
+  "description": "usando postgres",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Degmar",
+  "license": "ISC",
+  "dependencies": {
+    "knex": "^2.4.0",
+    "node": "^17.4.0",
+    "pg": "^8.7.1"
+  }
+}
